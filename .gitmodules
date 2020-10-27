@@ -1,0 +1,3 @@
+[submodule "face3d"]
+	path = face3d
+	url = https://github.com/zengxianyu/face3d
