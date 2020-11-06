@@ -22,3 +22,7 @@ Input inage:
 Output after inplane rotation:
 
 ![](https://raw.githubusercontent.com/zengxianyu/facepf/master/output.png)
+
+## Reference
+1. https://github.com/cleardusk/3DDFA/issues/182
+2. https://github.com/YadiraF/face3d
