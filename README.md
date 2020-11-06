@@ -5,7 +5,8 @@ A python implementation of the face profiling described in the 3DDFA paper
 1. Install packages: numpy, scipy, pillow
 2. add a submodule from the face3d repo
 ```
-git clone 
+git clone https://github.com/zengxianyu/facepf.git
+cd facepf
 git submodule init
 git submodule update
 ```
