@@ -1,16 +1,16 @@
 from PIL import Image
+import pdb
 import numpy as np
 from scipy.spatial import Delaunay
 from get_full_face import get_full_face
 from image_meshing import image_meshing
+from readobj import read_obj
 from face3d.mesh_numpy.transform import angle2matrix
 from face3d.mesh.render import render_texture
 
 
 # pre-defined values
-path_tris = "../ssddata/norm_data/fwh/tris_fwh.npy"
-path_pre = "../ssddata/norm_data/fwh"
-
+path_pre = "./annotations"
 idx_half = np.load(f"{path_pre}/index_half.npy")
 tris_half = np.load(f"{path_pre}/tri_half.npy")
 idx_bd = np.load(f"{path_pre}/index_half_bd.npy")
@@ -30,26 +30,22 @@ idx_mouth = np.array(idx_mouth, dtype=np.int)
 idx_nosetip = 8972
 pi = 3.141592653
 
-nexp = 1
-nid = 140
-path_img = f"../ssddata/FaceWarehouse_Data_0_raw/raw/Tester_{nid+1}/TrainingPose/pose_{nexp}.png"
-path_verts = f"../ssddata/norm_data/fwh/mesh_raw_bs/Tester_{nid+1}.npy"
-path_pose = f"../ssddata/norm_data/fwh/pose/Tester_{nid+1}.npz"
+path_img = "./examples/HELEN_232194_1_0.jpg"
+path_verts = "./examples/HELEN_232194_1_0.obj"
+path_pose = "./examples/pose.npz"
 
-vx = 30
-vy = 40
-vz = 10
+# angles in degree
+vx = 0
+vy = -30
+vz = 0
 
 img = Image.open(path_img)
 img = np.array(img)
 h,w,c = img.shape
 pose = np.load(path_pose)
 R_raw, T_raw, s_raw = pose['R'], pose['T'], pose['s']
-verts = np.load(path_verts)
-verts = verts[nexp]
-R_raw = R_raw[nexp]
-T_raw = T_raw[nexp]
-s_raw = s_raw[nexp]
+verts = read_obj(path_verts)
+verts = verts.T.copy()
 verts_face, tris_face = get_full_face(verts, idx_eyes1, idx_eyes2, idx_mouth, idx_half, tris_half)
 verts_bkg, tris_bkg = image_meshing(verts, R_raw, s_raw, T_raw, idx_bd, idx_nosetip, h, w)
 verts_image = np.concatenate((verts_face@R_raw*s_raw+T_raw, verts_bkg), 0)
@@ -71,5 +67,4 @@ result = render_texture(verts_n_rot, tris_image, texture_img, texture_corrdinate
                     mapping_type="bilinear")
 
 # save
-Image.fromarray(result.astype(np.uint8)).save("debug.png")
-#np.savez(rpath_name_aug + ".npz", (R_target, f_target, T_target, alpha))
+Image.fromarray(result.astype(np.uint8)).save("output.png")
