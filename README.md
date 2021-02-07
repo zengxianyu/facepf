@@ -4,7 +4,7 @@ The older version of this implementation can be found in the branch ``face3d".
 Then I migrate everything to FLAME[2] face model as I found it's easy to obtain and their code to fit 2d landmarks performs well. 
 
 ## Usage
-1. Install required envs the same as in [2]
+1. Install required envs the same as in [2] or following [there](https://github.com/zengxianyu/photometric_optimization)
 2. add [my folk of [2]](https://github.com/zengxianyu/photometric_optimization) as a submodule
 ```
 git clone https://github.com/zengxianyu/facepf.git
