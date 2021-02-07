@@ -1,0 +1,4 @@
+[submodule "photometric_optimization"]
+	path = photometric_optimization
+	url = https://github.com/zengxianyu/photometric_optimization
+	branch = master
